@@ -34,12 +34,15 @@
 	 * @param {string} [type] The type of event that will be triggered.
 	 * @returns {Object} An object with event key/value pairs to be passed to $.trigger().
 	 */
-	function getEvent(type) {
-		var event = { type: type };
+	function getEvent(type, obj) {
+		var add, event = {};
 		
 		if ($.isFunction(this.eventData)) {
 			$.extend(event, this.eventData.call(this.obj));
 		}
+		
+		$.extend(event, obj || {});
+		event.type = type;
 		
 		return event;
 	}
