@@ -177,18 +177,17 @@
 		 * @returns {Modal} The `Modal` instance created for the jQuery object DOM element. Returns `undefined` if using an empty or non HTMLElement selector.
 		 */
 		modal: function(options) {
-			obj = obj.first();
 			options = options || {};
 			
 			// Check to see if there's actually an object.
-			if (this.length === 1 && this[0].nodeType) {
+			if (this.length >= 1 && this[0].nodeType) {
 				// Close all existing modals that were created with the minimodal plugin.
 				if ($.modal instanceof Modal) {
 					$.modal.close();
 				}
 				
 				// Set the active modal and return it.
-				return $.modal = new Modal(this, options).open();
+				return $.modal = new Modal(this.first(), options).open();
 			}
 		}
 	});
