@@ -132,7 +132,7 @@
 		 *
 		 * @returns {Modal} Chainable return object.
 		 */
-		close: function() {
+		close: function(obj) {
 			// Apply the preClose function if it's specified.
 			if ($.isFunction(this.preClose)) {
 				this.preClose.apply(this.obj, arguments);
@@ -142,7 +142,7 @@
 			$shade.hide();
 			// Hide the active modal and fire the `modalclose` event with
 			// parameters obtained from the `eventData` option.
-			this.obj.hide().trigger(getEvent.call(this, 'modalclose'));
+			this.obj.hide().trigger(getEvent.call(this, 'modalclose', obj));
 			
 			// Reposition the DOM element back under its original parent.
 			this.parent.append(this.obj);
