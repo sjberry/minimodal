@@ -98,10 +98,11 @@
 			$shade.show();
 			// Display and center the specified modal.
 			// Fire the `modalopen` event after everything is loaded.
-			this.obj.css({
+			this.obj.show()
+				.css({
 					marginTop: -this.obj.outerHeight() / 2,
 					marginLeft: -this.obj.outerWidth() / 2
-				}).show()
+				})
 				.trigger(getEvent.call(this, 'modalopen'));
 			
 			// Focus the first available input in the opened modal.
