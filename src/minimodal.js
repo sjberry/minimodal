@@ -7,8 +7,22 @@
  * www.sberry.me
  * steven@sberry.me
  */
-
-(function(window, $, undefined) {
+(function(root, factory) {
+	if (typeof module === 'object' && module && typeof module.exports === 'object') {
+		factory.call(root, require('jquery'));
+	}
+	else if (typeof define === 'function' && define.amd) {
+		define(['jquery'], function() {
+			return factory.apply(root, arguments);
+		});
+	}
+	else if (typeof root === 'object' && root && typeof root.document === 'object') {
+		factory.call(root, root.jQuery);
+	}
+})(this, function($, undefined) {
+	var window = this;
+	var document = window.document;
+	
 	var $shade;
 	
 	// Prepare the DOM with necessary elements for minimodal operation.
@@ -192,4 +206,4 @@
 			}
 		}
 	});
-})(this, jQuery);
+});
