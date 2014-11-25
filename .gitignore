@@ -39,6 +39,7 @@ Thumbs.db
 # Build Folders #
 #################
 build
+dist
 
 # NodeJS #
 ##########
