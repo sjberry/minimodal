@@ -4,13 +4,13 @@ module.exports = function(grunt) {
 
 		clean: {
 			artifacts: 'artifacts',
-			dist: 'dist'
+			build: 'build'
 		},
 
 		copy: {
 			main: {
 				src: 'css/<%= package.name %>.css',
-				dest: 'dist/<%= package.name %>-<%= package.version %>.css'
+				dest: 'build/<%= package.name %>/<%= package.version %>/<%= package.name %>-<%= package.version %>.css'
 			}
 		},
 
@@ -47,7 +47,7 @@ module.exports = function(grunt) {
 					preserveComments: 'some'
 				},
 				src: 'src/<%= package.name %>.js',
-				dest: 'dist/<%= package.name %>-<%= package.version %>.min.js'
+				dest: 'build/<%= package.name %>/<%= package.version %>/<%= package.name %>-<%= package.version %>.min.js'
 			}
 		}
 	});
@@ -55,11 +55,19 @@ module.exports = function(grunt) {
 	// Load grunt tasks from NPM packages
 	require('load-grunt-tasks')(grunt);
 
-	// Default grunt
-	grunt.registerTask('default', [
-		'jshint:all',
-		'jscs:all',
+	grunt.registerTask('build', [
 		'copy:main',
 		'uglify:main'
+	]);
+
+	grunt.registerTask('lint', [
+		'jshint:all',
+		'jscs:all'
+	]);
+
+	// Default grunt
+	grunt.registerTask('default', [
+		'lint',
+		'build'
 	]);
 };
