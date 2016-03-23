@@ -1,6 +1,6 @@
 {
   "name": "minimodal",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "repository": "https://github.com/sjberry/minimodal.git",
   "private": true,
   "devDependencies": {

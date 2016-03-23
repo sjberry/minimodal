@@ -33,23 +33,23 @@
 		$shade = $('#minimodal-shade').hide();
 
 		// Handle click events on any .modal-close classed element to close the active modal.
-		$(document).delegate('.modal-close', 'click', function(e) {
+		$(document).on('click', '.modal-close', function(e) {
 			$.modal.close();
 		});
 	});
 
 	/**
-	 * Helper function that constructs an object to be passed
-	 * into jQuery's .trigger() on `modalopen` and `modalclose`.
-	 * The eventData function parameter on the modal is used to
-	 * set the object values.
+	 * Helper function that constructs an object to be passed into jQuery's .trigger() on `modalopen` and `modalclose`.
+	 * The eventData function parameter on the modal is used to set the object values.
 	 *
 	 * @private
 	 * @param {string} [type] The type of event that will be triggered.
 	 * @returns {Object} An object with event key/value pairs to be passed to $.trigger().
 	 */
 	function getEvent(type, obj) {
-		var add, event = {};
+		var event;
+
+		event = {};
 
 		if ($.isFunction(this.eventData)) {
 			$.extend(event, this.eventData.call(this.obj));
@@ -62,21 +62,24 @@
 	}
 
 	/**
-	 * An internally referenced object that keeps track of key variables
-	 * and associates a $.fn.modal() call with some prototype functions.
+	 * An internally referenced object that keeps track of key variables and associates a $.fn.modal() call with some
+	 * prototype functions.
 	 *
 	 * @private
-	 * @class
+	 * @constructor
 	 * @param {jQuery} obj A jQuery object to use as the active modal.
 	 * @param {Object} [options] An object containing setting variables for the modal.
 	 * @config {Function} [preOpen] A callback that runs before the modal window opens.
 	 * @config {Function} [postOpen] A callback that runs after the modal window opens.
 	 * @config {Function} [preClose] A callback that runs before the modal window closes.
 	 * @config {Function} [postClose] A callback that runs after the modal window closes.
-	 * @config {Function} [eventData] A callback returns a plain object containing data properties to pass to the `modalclose` event.
+	 * @config {Function} [eventData] A callback returns a plain object containing data properties to pass to the
+	 *     `modalclose` event.
 	 * @property {jQuery} obj A jQuery object to use as the active modal. This is a copy of the `obj` parameter.
-	 * @property {jQuery} parent The parent jQuery object of `obj`. This is used to reset the placement of the DOM node after the modal closes.
-	 * @property {HTMLElement} focused The DOM element that was focused before the modal opened. This element is refocused when the modal is closed.
+	 * @property {jQuery} parent The parent jQuery object of `obj`. This is used to reset the placement of the DOM node
+	 *     after the modal closes.
+	 * @property {HTMLElement} focused The DOM element that was focused before the modal opened. This element is
+	 *     refocused when the modal is closed.
 	 */
 	function Modal(obj, options) {
 		options.obj = obj;
@@ -89,10 +92,11 @@
 
 		return this;
 	}
+
 	Modal.prototype = {
 		/**
-		 * Performs modal pre-processing, opens the specified modal DOM element,
-		 * and finally performs modal post-processing.
+		 * Performs modal pre-processing, opens the specified modal DOM element, and finally performs modal
+		 * post-processing.
 		 *
 		 * @returns {Modal} Chainable return object.
 		 */
@@ -112,12 +116,16 @@
 			$shade.show();
 			// Display and center the specified modal.
 			// Fire the `modalopen` event after everything is loaded.
-			this.obj.show()
-				.css({
+			this.obj.show();
+
+			if (this.position !== false) {
+				this.obj.css({
 					marginTop: -this.obj.outerHeight() / 2,
 					marginLeft: -this.obj.outerWidth() / 2
-				})
-				.trigger(getEvent.call(this, 'modalopen'));
+				});
+			}
+
+			this.obj.trigger(getEvent.call(this, 'modalopen'));
 
 			// Focus the first available input in the opened modal.
 			this.obj.find('input, select, textarea, button').first().focus();
@@ -142,8 +150,8 @@
 		},
 
 		/**
-		 * Performs modal pre-processing, closes the active modal DOM element,
-		 * and finally performs modal post-processing.
+		 * Performs modal pre-processing, closes the active modal DOM element, and finally performs modal
+		 * post-processing.
 		 *
 		 * @returns {Modal} Chainable return object.
 		 */
@@ -188,8 +196,10 @@
 		 * @config {Function} [postOpen] A callback that runs after the modal window opens.
 		 * @config {Function} [preClose] A callback that runs before the modal window closes.
 		 * @config {Function} [postClose] A callback that runs after the modal window closes.
-		 * @config {Function} [eventData] A callback returns a plain object containing data properties to pass to the `modalclose` event.
-		 * @returns {Modal} The `Modal` instance created for the jQuery object DOM element. Returns `undefined` if using an empty or non HTMLElement selector.
+		 * @config {Function} [eventData] A callback returns a plain object containing data properties to pass to the
+		 *     `modalclose` event.
+		 * @returns {Modal} The `Modal` instance created for the jQuery object DOM element. Returns `undefined` if
+		 *     using an empty or non HTMLElement selector.
 		 */
 		modal: function(options) {
 			options = options || {};
